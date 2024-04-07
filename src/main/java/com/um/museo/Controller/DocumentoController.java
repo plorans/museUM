@@ -27,12 +27,12 @@ public class DocumentoController {
     }
 
     @DeleteMapping("/{id}")
-    private Mono<Void> deleteDocumento(@PathVariable Long id){
+    private Mono<Documento> deleteDocumento(Long id){
         return documentoManager.deleteDocumento(id);
     }
 
     @GetMapping("/{id}")
-    public Mono<Documento> getDocumento(@PathVariable Long id){
+    public Mono<Documento> getDocumento(Long id){
         return documentoManager.getDocumento(id);
     }
 

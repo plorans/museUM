@@ -13,6 +13,6 @@ public interface DocumentoManager {
 
     Mono<Documento> getDocumento(Long id);
 
-    Mono<Void> deleteDocumento(Long id);
+    Mono<Documento> deleteDocumento(Long id);
     
 }

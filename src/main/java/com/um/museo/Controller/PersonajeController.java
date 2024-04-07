@@ -8,38 +8,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.um.museo.Manager.EdificioManager;
+import com.um.museo.Manager.PersonajeManager;
 import com.um.museo.Model.Edificio;
+import com.um.museo.Model.Personaje;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/edificio")
-public class EdificioController {
+@RequestMapping("/personaje")
+public class PersonajeController {
 
     @Autowired
-    private EdificioManager edificioManager;
-
-    
+    private PersonajeManager personajeManager;
 
     @PostMapping()
-    public Mono<Edificio> saveEdificio(Edificio edificio) {
-        return edificioManager.saveEdificio(edificio);
+    public Mono<Personaje> saveEdificio(Personaje personaje) {
+        return personajeManager.savePersonaje(personaje);
     }
 
     @DeleteMapping("/{id}")
-    private Mono<Edificio> deleteEdificio(@PathVariable Long id){
-        return edificioManager.deleteEdificio(id);
+    private Mono<Personaje> deleteEdificio( Long id) {
+        return personajeManager.removePersonaje(id);
     }
 
     @GetMapping("/{id}")
-    public Mono<Edificio> getEdificio(@PathVariable Long id){
-        return edificioManager.getEdificio(id);
+    public Mono<Personaje> getPersonaje( Long id) {
+        return personajeManager.getPersonaje(id);
     }
 
     @GetMapping()
-    public Flux<Edificio> getEdificios(){
-        return edificioManager.getEdificios();
+    public Flux<Personaje> getPersonajes() {
+        return personajeManager.getPersonajes();
     }
 }

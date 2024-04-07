@@ -12,5 +12,5 @@ public interface EdificioManager {
 
     Mono<Edificio> getEdificio(Long id);
 
-    Mono<Void> deleteEdificio(Long id);
+    Mono<Edificio> deleteEdificio(Long id);
 }

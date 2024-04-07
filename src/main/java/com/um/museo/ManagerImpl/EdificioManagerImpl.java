@@ -1,6 +1,7 @@
 package com.um.museo.ManagerImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.um.museo.Dao.EdificioDao;
@@ -8,6 +9,7 @@ import com.um.museo.Manager.EdificioManager;
 import com.um.museo.Model.Edificio;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -20,21 +22,10 @@ public class EdificioManagerImpl implements EdificioManager {
     @Autowired
     private EdificioDao edificioDao;
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Override
     @Transactional
     public Mono<Edificio> saveEdificio(Edificio edificio) {
-        try {
-            EntityTransaction transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.persist(edificio);
-            transaction.commit();
-            return Mono.just(edificio);
-        } catch (Exception e) {
-            return Mono.error(e);
-        }
+        return Mono.just(edificioDao.save(edificio));
     }
 
     @Override
@@ -49,23 +40,14 @@ public class EdificioManagerImpl implements EdificioManager {
 
     @Transactional
     @Override
-    public Mono<Void> deleteEdificio(Long id) {
-        return Mono.fromRunnable(() -> {
-            EntityTransaction transaction = null;
-            try {
-                transaction = entityManager.getTransaction();
-                transaction.begin();
-                Edificio edificio = entityManager.find(Edificio.class, id);
-                if (edificio != null) {
-                    entityManager.remove(edificio);
-                    transaction.commit();
-                }
-            } catch (Exception e) {
-                if (transaction != null && transaction.isActive()) {
-                    transaction.rollback();
-                }
-                throw e;
-            }
+    public Mono<Edificio> deleteEdificio(Long id) {
+        return Mono.fromCallable(() -> {
+            Edificio deletedEdificio = edificioDao.findById(id).orElseThrow(() -> new NotFoundException());
+
+            edificioDao.deleteById(id);
+
+            return deletedEdificio;
         });
     }
+
 }

@@ -9,9 +9,9 @@ public interface PersonajeManager {
    
     Mono<Personaje> savePersonaje(Personaje personaje);
 
-    Flux<Personaje> getPersonajes(Personaje personaje);
+    Flux<Personaje> getPersonajes();
 
     Mono<Personaje> getPersonaje(Long id);
 
-    Mono<Personaje> removePersonaje(Personaje personaje);
+    Mono<Personaje> removePersonaje(Long id);
 }
