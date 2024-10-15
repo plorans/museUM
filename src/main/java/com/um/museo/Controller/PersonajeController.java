@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,24 +17,24 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/personaje")
+@RequestMapping("/api/personaje")
 public class PersonajeController {
 
     @Autowired
     private PersonajeManager personajeManager;
 
     @PostMapping()
-    public Mono<Personaje> saveEdificio(Personaje personaje) {
+    public Mono<Personaje> saveEdificio(@RequestBody Personaje personaje) {
         return personajeManager.savePersonaje(personaje);
     }
 
     @DeleteMapping("/{id}")
-    private Mono<Personaje> deleteEdificio( Long id) {
+    private Mono<Personaje> deleteEdificio(@PathVariable Long id) {
         return personajeManager.removePersonaje(id);
     }
 
     @GetMapping("/{id}")
-    public Mono<Personaje> getPersonaje( Long id) {
+    public Mono<Personaje> getPersonaje(@PathVariable Long id) {
         return personajeManager.getPersonaje(id);
     }
 

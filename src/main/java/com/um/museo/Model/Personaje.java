@@ -18,8 +18,15 @@ public class Personaje {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "personaje_id_seq")
     @SequenceGenerator(name = "personaje_id_seq", sequenceName = "personaje_id_seq",  allocationSize = 1)
     private Long id;
+
+    @Column(name = "personaje", length = 50)
     private String nombre;
+
+    @Column(name = "fecha", length = 75)
     private String fecha;
-    private String historia;
-    private String datos;
+
+    @Column(name = "descripcion", length = 500)
+    private String descripcion;
+
 }
+

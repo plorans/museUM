@@ -2,6 +2,7 @@ package com.um.museo.Model;
 
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,8 +20,16 @@ public class Edificio {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "edificios_id_seq")
     @SequenceGenerator(name = "edificios_id_seq", sequenceName = "edificios_id_seq",  allocationSize = 1)
     private Long id;
+
+    @Column(name = "nombre", length = 50)
     private String nombre;
+
+    @Column(name = "construccion", length = 150)
     private String construccion;
+
+    @Column(name = "inauguracion", length = 150)
     private String inauguracion;
+
+    @Column(name = "descripcion", length = 200)
     private String descripcion;
 }
